@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bouncing Balls</title>
+</head>
+<body>
+
+<div id="container" style="position: relative; width: 100vw; height: 100vh;">
+  <!-- Balls will be appended here using JavaScript -->
+</div>
+
+<script>
+class Ball {
+    constructor(size) {
+        this.size = size;
+        this.positionX = Math.random() * (window.innerWidth - this.size);
+        this.positionY = Math.random() * (window.innerHeight - this.size);
+        this.velocityX = (Math.random() - 0.5) * 13;
+        this.velocityY = (Math.random() - 0.5) * 13;
+        this.color = this.getRandomColor();
+        this.el = this.render();
+    }
+
+    getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    render() {
+        const ball = document.createElement('div');
+        ball.style.position = 'absolute';
+        ball.style.left = this.positionX + 'px';
+        ball.style.top = this.positionY + 'px';
+        ball.style.width = this.size + 'px';
+        ball.style.height = this.size + 'px';
+        ball.style.borderRadius = '50%';
+        ball.style.background = this.color;
+        document.getElementById('container').appendChild(ball);
+        return ball;
+    }
+
+    move() {
+        this.positionX += this.velocityX;
+        this.positionY += this.velocityY;
+
+        if (this.positionX < 0 || this.positionX + this.size > window.innerWidth) {
+            this.velocityX = -this.velocityX;
+            this.el.style.background = this.getRandomColor();
+        }
+        if (this.positionY < 0 || this.positionY + this.size > window.innerHeight) {
+            this.velocityY = -this.velocityY;
+            this.el.style.background = this.getRandomColor();
+        }
+
+        this.el.style.left = this.positionX + 'px';
+        this.el.style.top = this.positionY + 'px';
+    }
+}
+
+const balls = [];
+for (let i = 0; i < 13; i++) {
+    const size = Math.random() * 50 + 50;
+    balls.push(new Ball(size));
+}
+
+function moveBalls() {
+    balls.forEach(ball => ball.move());
+    requestAnimationFrame(moveBalls);
+}
+
+// Start the animation
+moveBalls();
+
+</script>
+
+</body>
+</html>
