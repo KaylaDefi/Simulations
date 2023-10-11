@@ -1,0 +1,112 @@
+
+  <div id="ball1" style="
+  z-index:5;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:green"></div>
+  
+  <div id="ball2" style="
+  z-index:5;
+  position:absolute;
+  left:200px;
+  top:300px;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:aqua"></div>
+  
+  <div id="ball3" style="
+  z-index:5;
+  position:absolute;
+  left:700px;
+  top:900px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:pink"></div>
+  
+<script>
+var ball1 = document.getElementById('ball1');
+var ball2 = document.getElementById('ball2');
+var ball3 = document.getElementById('ball3');
+
+var velocityX1 = 5;
+var velocityY1 = 3;
+var positionX1 = 0;
+var positionY1 = 0;
+
+var velocityX2 = 6;
+var velocityY2 = 1;
+var positionX2 = 200;
+var positionY2 = 300;
+
+var velocityX3 = 7;
+var velocityY3 = 4;
+var positionX3 = 700;
+var positionY3 = 900;
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function moveBalls() {
+    positionX1 += velocityX1;
+    positionY1 += velocityY1;
+    positionX2 += velocityX2;
+    positionY2 += velocityY2;
+    positionX3 += velocityX3;
+    positionY3 += velocityY3;
+
+    // Bounce off edges for ball1
+    if(positionX1 < 0 || positionX1 + 50 > window.innerWidth) {
+        velocityX1 = -velocityX1;
+        ball1.style.background = getRandomColor();
+    }
+    if(positionY1 < 0 || positionY1 + 50 > window.innerHeight) {
+        velocityY1 = -velocityY1;
+        ball1.style.background = getRandomColor();
+    }
+
+    // Bounce off edges for ball2
+    if(positionX2 < 0 || positionX2 + 90 > window.innerWidth) {
+        velocityX2 = -velocityX2;
+        ball2.style.background = getRandomColor();
+    }
+    if(positionY2 < 0 || positionY2 + 90 > window.innerHeight) {
+        velocityY2 = -velocityY2;
+        ball2.style.background = getRandomColor();
+    }
+
+    // Bounce off edges for ball3
+    if(positionX3 < 0 || positionX3 + 70 > window.innerWidth) {
+        velocityX3 = -velocityX3;
+        ball3.style.background = getRandomColor();
+    }
+    if(positionY3 < 0 || positionY3 + 70 > window.innerHeight) {
+        velocityY3 = -velocityY3;
+        ball3.style.background = getRandomColor();
+    }
+
+    ball1.style.left = positionX1 + 'px';
+    ball1.style.top = positionY1 + 'px';
+    ball2.style.left = positionX2 + 'px';
+    ball2.style.top = positionY2 + 'px';
+    ball3.style.left = positionX3 + 'px';
+    ball3.style.top = positionY3 + 'px';
+
+    requestAnimationFrame(moveBalls);
+}
+
+// Start the animation
+moveBalls();
+</script>
+  
